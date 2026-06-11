@@ -1,0 +1,25 @@
+{
+  "name": "prediction-market-scanner",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev -w @prediction-market-scanner/web",
+    "build": "npm run db:generate && npm run build -w @prediction-market-scanner/core && npm run build -w @prediction-market-scanner/db && npm run build -w @prediction-market-scanner/worker && npm run build -w @prediction-market-scanner/web",
+    "lint": "npm run db:generate && npm run typecheck -w @prediction-market-scanner/core && npm run typecheck -w @prediction-market-scanner/db && npm run typecheck -w @prediction-market-scanner/worker && npm run typecheck -w @prediction-market-scanner/web",
+    "test": "npm run test -w @prediction-market-scanner/core && npm run test -w @prediction-market-scanner/worker",
+    "db:generate": "npm run db:generate -w @prediction-market-scanner/db",
+    "db:migrate": "npm run db:migrate -w @prediction-market-scanner/db",
+    "worker": "npm run worker -w @prediction-market-scanner/worker",
+    "collect:sample": "npm run collect:sample -w @prediction-market-scanner/worker",
+    "report:overnight": "npm run report:overnight -w @prediction-market-scanner/worker"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "typescript": "^5.8.3"
+  }
+}
