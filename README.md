@@ -158,6 +158,13 @@ Captured dashboard screenshots:
 - `docs/demo/images/related-groups.png`
 - `docs/demo/images/snapshot-inspector.png`
 
+## Screenshots
+
+![Dashboard home](docs/demo/images/dashboard-home.png)
+![Signals page](docs/demo/images/signals.png)
+![Related groups page](docs/demo/images/related-groups.png)
+![Snapshot inspector](docs/demo/images/snapshot-inspector.png)
+
 ## Next Steps
 
 - Add trade-history-backed fill modeling if a reliable data source is available.
