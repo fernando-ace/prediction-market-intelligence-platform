@@ -115,7 +115,7 @@ npm run research:summary -- --format markdown
 Example quote-aggressiveness sweep:
 
 ```powershell
-npm run research:quote-sweep -- --markout-window 240m --fill-window 240m --min-entry-spread 0.04 --max-entry-spread 0.10 --dedupe-by ticker
+npm run research:quote-sweep -- --limit 50000 --lookback-hours 720 --min-age-minutes 240 --markout-window 240m --fill-window 240m --min-entry-spread 0.04 --max-entry-spread 0.10 --tick-size 0.01 --dedupe-by ticker --top 20
 ```
 
 ## Testing
