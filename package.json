@@ -16,7 +16,17 @@
     "db:migrate": "npm run db:migrate -w @prediction-market-scanner/db",
     "worker": "npm run worker -w @prediction-market-scanner/worker",
     "collect:sample": "npm run collect:sample -w @prediction-market-scanner/worker",
-    "report:overnight": "npm run report:overnight -w @prediction-market-scanner/worker"
+    "report:overnight": "npm run report:overnight -w @prediction-market-scanner/worker",
+    "parity:normalized": "npm run parity:normalized -w @prediction-market-scanner/worker",
+    "research:forward-returns": "npm run research:forward-returns -w @prediction-market-scanner/worker",
+    "research:candidates": "npm run research:candidates -w @prediction-market-scanner/worker",
+    "research:spread-tightening": "npm run research:spread-tightening -w @prediction-market-scanner/worker",
+    "research:spread-candidates": "npm run research:spread-candidates -w @prediction-market-scanner/worker",
+    "research:maker-quotes": "npm run research:maker-quotes -w @prediction-market-scanner/worker",
+    "research:fill-proxy": "npm run research:fill-proxy -w @prediction-market-scanner/worker",
+    "research:quote-sweep": "npm run research:quote-sweep -w @prediction-market-scanner/worker",
+    "research:spread-persistence": "npm run research:spread-persistence -w @prediction-market-scanner/worker",
+    "research:summary": "npm run research:summary -w @prediction-market-scanner/worker --"
   },
   "devDependencies": {
     "@types/node": "^22.15.30",

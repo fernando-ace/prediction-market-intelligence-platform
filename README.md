@@ -172,6 +172,13 @@ Generate an overnight related-market report:
 npm run report:overnight
 ```
 
+Print the consolidated read-only research story:
+
+```powershell
+npm run research:summary
+npm run research:summary -- --format markdown
+```
+
 ## Environment Variables
 
 The project uses safe local defaults and public Kalshi endpoints. Do not commit a real `.env` file.
@@ -197,6 +204,36 @@ The project uses safe local defaults and public Kalshi endpoints. Do not commit 
 During local validation, the scanner successfully collected thousands of Kalshi orderbook snapshots, rejected invalid or low-edge signals, and avoided creating paper trades from incomplete liquidity. The current detectors are conservative and did not identify a validated positive-edge opportunity during the latest sample runs.
 
 These results should be treated as validation of the software workflow, not as evidence of a profitable strategy.
+
+## Current Research Summary
+
+The latest read-only research pass uses Kalshi orderbook snapshots to study whether prediction market microstructure contains repeatable descriptive signals worth testing further. No real trades were placed, no authenticated order placement was used, and the results below should be interpreted as research observations rather than live trading performance.
+
+The main strategy studied was spread tightening and passive quote markout. The strongest direction so far is not the original binary complement arbitrage baseline, but a market microstructure signal around wider spreads that later tighten. The major unresolved caveat is execution realism: the fill proxy is based on later orderbook snapshots, not actual exchange fills, queue position, cancellations, or trade history.
+
+### Methodology
+
+- **Data source:** Kalshi public market and orderbook snapshots.
+- **Status:** Read-only research.
+- **Trading:** None.
+- **Primary strategy studied:** Spread-tightening / passive quote markout.
+- **Execution caveat:** Fillability is estimated from orderbook snapshots, not actual fills.
+
+### Findings
+
+**Binary complement arbitrage baseline:** Low-edge rejected signals were consistently negative, and no near-miss candidates were found. The best net edge observed was `-0.020000` versus a minimum net edge threshold of `0.005000`, so the current evidence does not support loosening thresholds.
+
+**Spread tightening:** Wider spreads tightened more often in the sample. The `0.04-0.10` entry spread range was strongest, with the `0.05-0.10` bucket showing about `90%` 60-minute tighten rate and `100%` 240-minute tighten rate. This suggests the descriptive spread-tightening signal is real in the current sample.
+
+**Persistence:** A 50,000-snapshot sample produced 36 wide-spread episodes across 12 unique tickers. The median episode duration was about `0.98` minutes, while the longest episode lasted about `122.52` minutes. Some wide-spread episodes persisted for 20, 30, 50, and 120+ minutes, so not all wide spreads appear to be one-snapshot noise.
+
+**Maker quote markout:** Passive `bid_plus_tick` quotes showed strong markout at both 60-minute and 240-minute horizons before fill constraints. In the `0.04-0.10` entry spread range, the 240-minute sweep found 18 deduped candidates with `25.35%` average markout and `94.44%` favorable rate. The 60-minute sweep found 16 deduped candidates with `17.30%` average markout and `93.75%` favorable rate.
+
+**Fill proxy / quote aggressiveness:** Conservative quotes had stronger markout but lower estimated fillability. In the 240-minute sweep, `bid_plus_1_tick` showed `22.22%` possible fill rate and `25.35%` average markout, while `bid_plus_3_ticks` improved possible fill rate to `55.56%` but reduced average markout to `4.67%`. `ask_minus_1_tick` showed `77.78%` possible fill rate but negative markout. More aggressive quotes improved fillability in the proxy, but tended to destroy the observed edge.
+
+### Research Takeaway
+
+The best current research direction is the spread-tightening market microstructure signal. The main weakness is fillability and execution realism, because the current proxy uses orderbook snapshots rather than actual trade history or confirmed fills. The next useful step is to collect trade history or improve the fill proxy, then build a true event-driven backtester before treating the signal as anything more than a promising descriptive pattern.
 
 ## Limitations
 

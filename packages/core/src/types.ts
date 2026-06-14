@@ -1,4 +1,79 @@
-export type Platform = "kalshi";
+export type Platform = "kalshi" | "polymarket";
+
+export type NormalizedMarketStatus = "active" | "closed" | "settled" | "unknown";
+
+export interface NormalizedMarket {
+  platform: Platform;
+  marketId: string;
+  title: string;
+  category?: string;
+  closeTime?: string;
+  status?: NormalizedMarketStatus;
+  outcomes: NormalizedOutcome[];
+  raw?: unknown;
+}
+
+export interface NormalizedOutcome {
+  outcomeId: string;
+  label: string;
+  yesBid?: number;
+  yesAsk?: number;
+  noBid?: number;
+  noAsk?: number;
+  lastPrice?: number;
+  volume?: number;
+  liquidity?: number;
+  raw?: unknown;
+}
+
+export interface NormalizedOrderBookSnapshot {
+  platform: Platform;
+  marketId: string;
+  outcomeId?: string;
+  capturedAt: string;
+  bestBid?: number;
+  bestAsk?: number;
+  spread?: number;
+  midpoint?: number;
+  raw?: unknown;
+}
+
+export type SignalType =
+  | "binary_complement_arb"
+  | "multi_outcome_arb"
+  | "cross_platform_spread"
+  | "stale_price"
+  | "wide_spread_market_making_candidate"
+  | "related_market_inconsistency"
+  | "near_resolution_yield";
+
+export interface NormalizedSignal {
+  signalId: string;
+  platform: Platform;
+  marketId: string;
+  outcomeId?: string;
+  signalType: SignalType;
+  detectedAt: string;
+  entryPrice?: number;
+  estimatedEdge?: number;
+  liquidity?: number;
+  spread?: number;
+  reason: string;
+  raw?: unknown;
+}
+
+export type ForwardReturnWindow = "15m" | "30m" | "60m" | "240m";
+
+export interface ForwardReturn {
+  signalId: string;
+  window: ForwardReturnWindow;
+  checkedAt: string;
+  entryPrice?: number;
+  exitPrice?: number;
+  returnAbs?: number;
+  returnPct?: number;
+  wasProfitable?: boolean;
+}
 
 export type SignalStatus = "accepted" | "rejected";
 
